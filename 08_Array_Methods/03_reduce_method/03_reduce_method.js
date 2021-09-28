@@ -1,6 +1,6 @@
 const scores = [10, 20, 60, 40, 70, 90, 30];
 
-// Scores over 50 
+// Scores over 30 
 const result = scores.reduce((accumulator, current) => {
     if (current > 30) {
         accumulator++;
