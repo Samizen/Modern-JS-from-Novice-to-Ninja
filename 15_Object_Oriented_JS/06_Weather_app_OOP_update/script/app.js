@@ -1,10 +1,13 @@
 // DOM Manipulations
-const citySearchBar = document.querySelector('.change-location')
+const citySearchBar = document.querySelector('.change-location') 
 const card = document.querySelector('.card');
 const cardDetails = document.querySelector('.details');
 
 const time = document.querySelector("img.time");
 const icon = document.querySelector('.icon img');
+
+// Calling the forecast class
+const forecast = new Forecast();
 
 const updateUI = (data) => {
     
@@ -39,23 +42,13 @@ const updateUI = (data) => {
     
 };
 
-const updateCity = async(searchedCity) => {
-    const cityDetails = await getCity(searchedCity);
-    const weather = await getWeather(cityDetails.Key);
-
-    return {
-        cityDetails,
-        weather
-    };
-}
-
 citySearchBar.addEventListener('submit', e => {
     e.preventDefault();
     const searchedCity = citySearchBar.city.value.trim();
     citySearchBar.reset();
 
     // Update city name:
-    updateCity(searchedCity)
+    forecast.updateCity(searchedCity)
         .then(data => updateUI(data))
         .catch(err => console.log(err));
 
@@ -64,7 +57,7 @@ citySearchBar.addEventListener('submit', e => {
 });
 
 if(localStorage.getItem('city')){
-    updateCity(localStorage.getItem('city'))
+    forecast.updateCity(localStorage.getItem('city'))
         .then(data => updateUI(data))
         .catch(err => console.log(err));
 }
